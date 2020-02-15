@@ -20,8 +20,9 @@
               
 
           </div>
-          <button v-if="status" @click.prevent="post" >Add Blog</button>
-          <button v-else @click.prevent="updatePost(blog.id)" type="button">updatePost</button>
+          <button v-if="status" @click.prevent="post"  >Add Blog</button>
+          <button v-else @click.prevent="updatePost(blog.id)" type="submit">updatePost</button>
+          <button @click="reload" >Reset</button>
 
 
       </form>
@@ -56,7 +57,8 @@
             </li>
         </ul>
             <button @click="editPost(blog)">Edit</button>
-            <button @click="removePost(blog.id)">Delete</button>
+            <button @click.prevent="removePost(blog.id)" type="submit">Delete</button>
+            
         </div>
     </div>
     
@@ -85,7 +87,7 @@ export default {
         post: function(){
             this.$http.post('https://blogproject-7f9ce.firebaseio.com/posts.json',this.blog).then(function(data){
                 console.log(data);
-                this.reload();
+                
                 
             })
         },
@@ -107,7 +109,7 @@ export default {
             console.log(i)
             this.$http.delete(`https://blogproject-7f9ce.firebaseio.com/posts/${i}.json`).then(function(res){
                 console.log(res);
-                this.reload();
+                
             })
 
             // console.log(i)
@@ -137,7 +139,7 @@ export default {
                 console.log(error)
             })
             this.status = true;
-            this.reload()
+            
 
         }
 
